@@ -10,20 +10,24 @@ import java.util.*;
  */
 public class Client {
 
-    public static String user, msg = "";
+    public static String user, msg, dataSend = "";
 
     public static void main(String[] args) {
         inputUser();
-        server();
+        socket();
 
     }
 
-    public static void server() {
+    public static void socket() {
+        //dataSend = "\t\n- - -DATA CLIENT- - -\nUsuario: " + user + "." + "\nMe
+        //nsaje: " + msg + ".";
 
         try {
             Socket s = new Socket("localhost", 6666);  //IP , PORT CONFIG
             DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-            dout.writeUTF("Hello Server");
+            //dout.writeUTF(dataSend);
+            dout.writeUTF(user);
+            dout.writeUTF(msg);
             dout.flush();
             dout.close();
             s.close();
@@ -33,11 +37,12 @@ public class Client {
     }
 
     public static void inputUser() {
-        int randomServer=0;
+        int randomServer = 0;
         boolean msgOk = false;
-        String passOk="";
+        String passOk = "";
         Scanner scan = new Scanner(System.in);
-        while (msgOk != true) {
+
+        do {
             System.out.print("Introduzca su nombre de usuario : ");
             user = scan.nextLine();
             System.out.print("Introduzca su mensaje a continuación: ");
@@ -45,16 +50,17 @@ public class Client {
             System.out.println("Desea enviar el mensaje ?");
             System.out.print("Si(s) / No(n) ? -> ");
             passOk = scan.nextLine();
-            if ("S".equals(passOk)) {
-                System.out.println("Se enviará el mensaje al servidor numero"+randomServer+"");
-                msgOk=true;
-                
+            if ("s".equals(passOk)) {
+                System.out.println("Se envió el mensaje al servidor número " + randomServer + "");
+                msgOk = true;
+
+            } else {
+                System.out.println("No se envió nada al servidor !");
+                System.out.println("-----------------------------NEW LINE CLIENT------------------"
+                        + "--------------");
+                msgOk = false;
             }
-            else{
-                System.out.println("No se enviará nada al servidor !");
-                msgOk=false;
-            }
-        }
+        } while (msgOk != true);
 
     }
 
