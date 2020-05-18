@@ -9,7 +9,6 @@ import java.util.*;
  * 29-Nov-2019
  *
  * @author CincoOcho <///7>
- * Del toro Gómez José Luis 211027474UDGCUT
  */
 public class Client {
 
